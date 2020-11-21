@@ -26,7 +26,6 @@ services:
     environment:
       - "NB_UID=${NB_UID}"
       - "NB_GID=${NB_GID}"
-      - "PROTOCOL=${PROTOCOL}"
       - "CHOWN_HOME=yes"
       - "CHOWN_HOME_OPTS=-R"
 
