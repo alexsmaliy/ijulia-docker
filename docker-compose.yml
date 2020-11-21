@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+
+  jupyter-service:
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    image: "local_julia_notebook:0.0.4"
+#    image: "jupyter/datascience-notebook:latest"
+
+    ports:
+      - "8888:8888"
+
+    user: root
+
+    init: true
+
+    entrypoint:
+      - "sh"
+      - "-c"
+      - "start-notebook.sh ${EXTRA_ARGS} --no-browser --NotebookApp.custom_display_url=${URL}"
+
+    environment:
+      - "NB_UID=${NB_UID}"
+      - "NB_GID=${NB_GID}"
+      - "PROTOCOL=${PROTOCOL}"
+      - "CHOWN_HOME=yes"
+      - "CHOWN_HOME_OPTS=-R"
+
+    volumes:
+      - "./notebooks:/home/jovyan/work"
+      - "./security/cert:/home/jovyan/.local/cert"
+
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: "4g"
+
