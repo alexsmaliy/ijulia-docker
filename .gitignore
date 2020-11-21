@@ -1,0 +1,14 @@
+# files that have to do with certs
+*.cnf
+*.crt
+*.csr
+*.key
+*.pem
+*.srl
+
+# IDE files
+.idea/
+*.iml
+
+# Jupyter files
+.ipynb_checkpoints/
