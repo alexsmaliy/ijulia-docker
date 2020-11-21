@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -o errexit
+
 pushd "$(dirname "$0")" 1> /dev/null || return
 trap "popd 1> /dev/null" EXIT
 
@@ -10,4 +12,3 @@ if [ -z "$EXISTS" ]; then
 else
   echo "$(docker ps --all --quiet --filter id=$EXISTS --format '{{.Status}}')"
 fi
-

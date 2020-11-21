@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -o errexit
+
 pushd "$(dirname "$0")" 1> /dev/null || return
 trap "popd 1> /dev/null" EXIT
 
@@ -11,6 +13,5 @@ if [ -z "$EXISTS" ]; then
 elif [ -n "$IS_RUNNING" ]; then
   echo "Service seems to be running already. Try following logs."
 else
-  docker-compose restart
+  docker-compose restart && docker-compose logs --follow --tail 25 2> /dev/null
 fi
-

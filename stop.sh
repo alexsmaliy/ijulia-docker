@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-set -o xtrace
+set -o errexit
 
 pushd "$(dirname "$0")" 1> /dev/null || return
 trap "popd 1> /dev/null" EXIT
@@ -16,4 +16,3 @@ elif [ -z "$IS_RUNNING" ] && [ -z "$IS_RESTARTING" ]; then
 else
   docker-compose stop
 fi
-
