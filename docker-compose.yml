@@ -30,7 +30,7 @@ services:
       - "CHOWN_HOME_OPTS=-R"
 
     volumes:
-      - "./notebooks:/home/jovyan/work"
+      - "./work:/home/jovyan/work"
       - "./security/cert:/home/jovyan/.local/cert"
 
     deploy:
