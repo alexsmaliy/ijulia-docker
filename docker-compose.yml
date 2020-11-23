@@ -8,8 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    image: "local_julia_notebook:0.0.4"
-#    image: "jupyter/datascience-notebook:latest"
+    image: "jupyter-service:latest"
 
     ports:
       - "8888:8888"
