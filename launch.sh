@@ -9,14 +9,15 @@ EXISTS=$(docker-compose ps --quiet)
 IS_RUNNING=${EXISTS:+$(docker ps --all --quiet --filter id="$EXISTS" --filter status=running)}
 
 if [ -f security/cert/localhost.crt ]; then
-  URL="https://localhost:8888"
   EXTRA_ARGS=(
     "--NotebookApp.certfile=/home/jovyan/.local/cert/localhost.crt"
     "--NotebookApp.keyfile=/home/jovyan/.local/cert/localhost.key"
+    "--NotebookApp.custom_display_url=https://localhost:8888"
   )
 else
-  URL="http://0.0.0.0:8888"
-  EXTRA_ARGS=()
+  EXTRA_ARGS=(
+    "--NotebookApp.custom_display_url=http://0.0.0.0:8888"
+  )
 fi
 
 if [ -z "$EXISTS" ]; then
@@ -25,7 +26,6 @@ if [ -z "$EXISTS" ]; then
   # change $NB_GID to be able to read/write the host's mounted volume.
   NB_UID=1000 \
   NB_GID=$(id -g) \
-  URL="$URL" \
   EXTRA_ARGS="${EXTRA_ARGS[@]}" \
   docker-compose --compatibility up --build --detach \
   && docker-compose logs --follow 2> /dev/null

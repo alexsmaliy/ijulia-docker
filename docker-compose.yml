@@ -20,7 +20,7 @@ services:
     entrypoint:
       - "sh"
       - "-c"
-      - "start-notebook.sh ${EXTRA_ARGS} --no-browser --NotebookApp.custom_display_url=${URL}"
+      - "start-notebook.sh --no-browser ${EXTRA_ARGS}"
 
     environment:
       - "NB_UID=${NB_UID}"
