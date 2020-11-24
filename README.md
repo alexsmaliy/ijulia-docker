@@ -9,6 +9,7 @@ Commands
 | [stop.sh](./stop.sh) | Stops the IJulia container, if it exists. |
 | [status.sh](./status.sh) | Prints the status of the IJulia container. |
 | [follow-logs.sh](./follow-logs.sh) | Attaches to a running or stopped container and prints a running view of STDOUT/STDERR of PID1. |
+| [shell.sh](./shell.sh) | Open a Bash shell as the non-root user `jovyan` in the container. |
 | [destroy.sh](./destroy.sh) | Stops *and removes* the IJulia container. |
 
 
