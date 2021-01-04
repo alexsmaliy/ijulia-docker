@@ -6,7 +6,7 @@ services:
 
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: jupyter.Dockerfile
 
     image: "jupyter-service:latest"
 
@@ -38,3 +38,40 @@ services:
           cpus: "2"
           memory: "4g"
 
+
+  pluto-service:
+
+    build:
+      args:
+        - "PLUTO_UID=${NB_UID}"
+      context: .
+      dockerfile: pluto.Dockerfile
+
+    image: "pluto-service:latest"
+
+    ports:
+      - "1234:1234"
+
+    init: true
+
+    entrypoint:
+      - "julia"
+      - "-e"
+      - >-
+        using Pluto;
+        Pluto.run(;
+          launch_browser = false,
+          host = "0.0.0.0",
+          require_secret_for_open_links = false,
+          require_secret_for_access = true);
+
+    volumes:
+      - type: bind
+        source: "./work-pluto"
+        target: "/home/pluto/work-pluto"
+
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: "4g"

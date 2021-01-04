@@ -12,8 +12,8 @@ function usage() { cat << EOF
 Usage:
   $(basename "$0") $(services_list_pipe_separated_str)
 What it does:
-  Destroys the specified service. Stops and removes its container(s).
-  The host's mounted volumes with shared files are unaffected.
+  Starts or restarts the container(s) for the specified service, then
+  follows the logs for peace of mind (Ctrl+C to stop following logs).
 EOF
 }
 
@@ -23,9 +23,10 @@ SERVICE="$1-service"
 
 EXISTS=$(docker-compose ps --quiet "$SERVICE")
 
-if [ -n "$EXISTS" ]; then
-  docker-compose rm --force --stop "$SERVICE"
-  docker network rm $(docker network ls -q) 2> /dev/null
+if [ -z "$EXISTS" ]; then
+  unset -f print_usage_and_stop_if_needed # hack to placate extglob
+  ./launch.sh "$1"
 else
-  echo "Nothing to destroy."
+  docker-compose restart "$SERVICE"
+  docker-compose logs --follow --tail 25 "$SERVICE"
 fi
