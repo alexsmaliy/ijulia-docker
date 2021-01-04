@@ -1,9 +1,15 @@
-FROM julia:1.5.3-alpine3.12
+FROM julia:1.5.3-buster
 
 # The value of this build arg is set dynamically in docker-compose.yml.
 ARG PLUTO_UID
 
-RUN adduser --disabled-password --uid $PLUTO_UID pluto; \
+# Debian Buster complains if GECOS is not set for the new user.
+# Set it to all empty fields.
+RUN adduser \
+      --disabled-password \
+      --uid $PLUTO_UID \
+      --gecos ',,,' \
+      pluto; \
     mkdir /home/pluto/work-pluto; \
     chmod g+s /home/pluto/work-pluto;
 
