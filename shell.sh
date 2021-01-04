@@ -27,8 +27,8 @@ function jupyter_shell() {
 
 function pluto_shell() {
   PLUTO_USER=pluto
-  echo "Opening a lightweight Ash shell as $PLUTO_USER in $SERVICE..."
-  docker-compose exec --user "$PLUTO_USER" "$SERVICE" ash
+  echo "Opening a Bash shell as $PLUTO_USER in $SERVICE..."
+  docker-compose exec --user "$PLUTO_USER" "$SERVICE" bash
 }
 
 print_usage_and_stop_if_needed "$1"
